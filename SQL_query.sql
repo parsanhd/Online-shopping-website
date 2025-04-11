@@ -23,6 +23,8 @@ CREATE TABLE Customer (
     FOREIGN KEY (AddressID) REFERENCES Address(AddressID)
 );
 
+CREATE INDEX idx_customer_email ON Customer(Email);
+
 CREATE TABLE Staff (
     StaffID INT PRIMARY KEY,
     First_name VARCHAR(100),
@@ -44,6 +46,12 @@ CREATE TABLE Product (
     Size VARCHAR(50),
     Description TEXT
 );
+
+-- Index on Product Name for faster searches
+CREATE INDEX idx_product_name ON Product(Name);
+-- Index on CategoryID for faster category filtering
+CREATE INDEX idx_product_category ON Product(Category);
+
 -- Stock Table
 CREATE TABLE Stock (
     ProductID INT,
@@ -53,6 +61,12 @@ CREATE TABLE Stock (
     FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
     FOREIGN KEY (WarehouseID) REFERENCES Warehouse(WarehouseID)
 );
+
+-- Index on ProductID for faster stock lookups by product
+CREATE INDEX idx_stock_product ON Stock(ProductID);
+-- Index on WarehouseID for faster stock lookups by warehouse
+CREATE INDEX idx_stock_warehouse ON Stock(WarehouseID);
+
 CREATE TABLE CreditCard (
     Card_number VARCHAR(20) PRIMARY KEY,
     CustomerID INT,
